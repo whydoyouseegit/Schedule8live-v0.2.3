@@ -1,0 +1,153 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --bg-main: #f8fafc;
+    --card-bg: #ffffff;
+    --accent: #3b82f6;
+    --accent-light: #fafafa;
+    --border: #e2e8f0;
+    --border-light: #f1f5f9;
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+}
+
+body {
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-main);
+    height: 100vh;
+    overflow: hidden;
+    color: #0f172a;
+}
+
+/* Сетка фиксированная 6 колонок, весь экран */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    padding: 12px;
+    height: 100%;
+}
+
+/* Карточки */
+.schedule-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--card-bg);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+    height: 100%;
+    
+}
+.schedule-card:hover {
+    box-shadow: var(--shadow); /* оставляем обычную тень */
+    border-color: var(--border); /* оставляем исходный цвет */
+}
+/* Заголовок класса */
+.card-header {
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #2563eb, #3b8fc0);
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    text-align: center;
+}
+
+/* Список уроков без скролла */
+.lessons-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+    justify-content: space-around; /* равномерное распределение уроков */
+}
+
+/* Уроки с акцентом */
+.lesson-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--accent-light); /* цвет по умолчанию */
+    border-radius: 14px;
+    padding: 10px 12px;
+    transition: none; /* отключаем анимацию */
+    flex: 1; /* равномерно распределяем */
+}
+
+/* Убираем hover полностью */
+.lesson-item:hover {
+    background: var(--accent-light); /* оставляем исходный цвет */
+    box-shadow: none; /* убираем тень при наведении */
+}
+
+/* Время урока */
+.lesson-time {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 4px;
+}
+
+/* Название предмета */
+.lesson-subject {
+    font-weight: 600;
+    font-size: 14px;
+    color: #0f172a;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Учитель и кабинет */
+.lesson-details {
+    display: flex;
+    gap: 6px;
+    font-size: 12px;
+    flex-wrap: wrap;
+}
+.lesson-teacher {
+    background: #dbeafe;
+    padding: 2px 8px;
+    border-radius: 8px;
+    color: #1e40af;
+    font-weight: 500;
+}
+.lesson-room {
+    background: #bfdbfe;
+    padding: 2px 8px;
+    border-radius: 8px;
+    color: #1e40af;
+}
+.lesson-room::before { content: "📍 "; }
+
+/* Пустой урок */
+.lesson-empty { 
+    background: #fafafa; 
+        color: #64748b; 
+    font-style: italic; 
+    text-align: center; 
+}
+
+/* Загрузка */
+.loading-state {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #64748b;
+}
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-light);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
