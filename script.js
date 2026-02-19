@@ -4,23 +4,7 @@
     let slideInterval = null;
     let currentSlide = 0;
     let workbookCache = null;
-    let forcedSheet = null;
-
-    // Фиксация размеров
-    function fixDimensions() {
-        const container = document.getElementById('content');
-        if (container) {
-            container.style.width = '1272px';
-            container.style.minWidth = '1272px';
-            container.style.maxWidth = '1272px';
-        }
-        
-        document.body.style.width = '1280px';
-        document.body.style.minWidth = '1280px';
-        document.body.style.maxWidth = '1280px';
-        document.body.style.margin = '0 auto';
-        document.body.style.overflow = 'hidden';
-    }
+    let forcedSheet = null; // для ручного переключения смены
 
     // --- Вспомогательные функции ---
     function normalize(str) {
@@ -61,7 +45,7 @@
 
     // --- Авто-переключение смен ---
     function getCurrentSheets(){
-        if(forcedSheet) return [forcedSheet];
+        if(forcedSheet) return [forcedSheet]; // если принудительно сменили
         const now = new Date();
         const hour = now.getHours();
         const minute = now.getMinutes();
@@ -102,7 +86,6 @@
         }
         if(headerRow===-1){
             container.innerHTML='<div class="loading-state"><p>Неверный формат файла</p></div>';
-            fixDimensions();
             return;
         }
 
@@ -146,7 +129,7 @@
             const lessons=schedule[pos.name]||[];
             return `
                 <div class="schedule-card">
-                    <div class="card-header">${pos.name}</div>
+                    <div class="card-header">${pos.name} <span class="class-badge">класс</span></div>
                     <div class="lessons-list">
                         ${lessons.map(lesson=>`
                             <div class="lesson-item ${!lesson.teacher&&!lesson.room&&lesson.subject==='окно'?'lesson-empty':''}">
@@ -164,15 +147,14 @@
             `;
         }).join('');
         container.innerHTML = html;
-        fixDimensions();
     }
 
-    document.addEventListener('DOMContentLoaded', fixDimensions);
     loadSchedule();
 
+    // ===================
     // --- ДЕБАГ-МЕНЮ ---
+    // ===================
     const debugMenu = document.createElement('div');
-    debugMenu.id = 'debugMenu';
     debugMenu.style.cssText = `
         position: fixed; top: 10px; right: 10px; width: 280px;
         background: rgba(0,0,0,0.85); color: #fff; font-size: 14px;
@@ -190,6 +172,7 @@
     `;
     document.body.appendChild(debugMenu);
 
+    // Показ / скрытие меню Ctrl+D
     document.addEventListener('keydown', e=>{
         if(e.key.toLowerCase()==='m'){
             debugMenu.style.display = debugMenu.style.display==='flex'?'none':'flex';
