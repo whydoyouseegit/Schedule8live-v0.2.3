@@ -4,7 +4,7 @@
     --bg-main: #f8fafc;
     --card-bg: #ffffff;
     --accent: #3b82f6;
-    --accent-light: #ffffff;
+    --accent-light: #fafafa;
     --border: #e2e8f0;
     --border-light: #f1f5f9;
     --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
@@ -150,4 +150,5 @@ body {
     animation: spin 0.8s linear infinite;
     margin-bottom: 16px;
 }
+
 @keyframes spin { to { transform: rotate(360deg); } }
