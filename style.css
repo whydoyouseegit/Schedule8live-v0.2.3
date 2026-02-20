@@ -1,135 +1,152 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-    --bg-main: #f8fafc;
+    --bg-main: #f0f4f8;
     --card-bg: #ffffff;
-    --accent: #3b82f6;
-    --accent-light: #fafafa;
+    --accent: #2563eb;
+    --accent-light: #f8fafc;
     --border: #e2e8f0;
-    --border-light: #f1f5f9;
-    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-    --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+    --border-light: #e9eef3;
+    --shadow: 0 2px 4px -1px rgba(0 0 0 / 0.03), 0 1px 2px -1px rgba(0 0 0 / 0.02);
+    --shadow-lg: 0 10px 15px -5px rgba(0 0 0 / 0.03);
 }
 
 body {
-    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
     background: var(--bg-main);
     height: 100vh;
     overflow: hidden;
-    color: #0f172a;
+    color: #0b1e33;
 }
 
-/* Сетка фиксированная 6 колонок, весь экран */
+/* Сетка 6 колонок, плотнее */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    gap: 12px;
-    padding: 12px;
+    gap: 8px;
+    padding: 8px;
     height: 100%;
 }
 
-/* Карточки */
+/* Карточки компактнее */
 .schedule-card {
     display: flex;
     flex-direction: column;
     background: var(--card-bg);
-    border-radius: 20px;
+    border-radius: 14px;
     overflow: hidden;
     box-shadow: var(--shadow);
     border: 1px solid var(--border);
-    transition: all 0.2s;
     height: 100%;
-    
-}
-.schedule-card:hover {
-    box-shadow: var(--shadow); /* оставляем обычную тень */
-    border-color: var(--border); /* оставляем исходный цвет */
-}
-/* Заголовок класса */
-.card-header {
-    padding: 14px 16px;
-    background: linear-gradient(135deg, #2563eb, #3b8fc0);
-    color: white;
-    font-weight: 600;
-    font-size: 18px;
-    text-align: center;
+    font-size: 12.5px;
 }
 
-/* Список уроков без скролла */
+/* Заголовок класса - меньше паддинг */
+.card-header {
+    padding: 8px 10px;
+    background: linear-gradient(145deg, #1d4ed8, #2563eb);
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Список уроков с минимальными отступами */
 .lessons-list {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 8px;
-    justify-content: space-around; /* равномерное распределение уроков */
+    gap: 4px;
+    padding: 6px;
 }
 
-/* Уроки с акцентом */
+/* Уроки очень компактные */
 .lesson-item {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: var(--accent-light); /* цвет по умолчанию */
-    border-radius: 14px;
-    padding: 10px 12px;
-    transition: none; /* отключаем анимацию */
-    flex: 1; /* равномерно распределяем */
+    background: var(--accent-light);
+    border-radius: 10px;
+    padding: 6px 8px;
+    flex: 1;
+    border-left: 3px solid transparent;
+    transition: none;
+    min-height: 52px;
 }
 
-/* Убираем hover полностью */
-.lesson-item:hover {
-    background: var(--accent-light); /* оставляем исходный цвет */
-    box-shadow: none; /* убираем тень при наведении */
+/* Цветная полоска для наглядности */
+.lesson-item:nth-child(odd) {
+    border-left-color: #3b82f6;
+}
+.lesson-item:nth-child(even) {
+    border-left-color: #60a5fa;
 }
 
-/* Время урока */
+/* Время урока - мельче */
 .lesson-time {
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 600;
-    color: var(--accent);
-    margin-bottom: 4px;
+    color: #3b82f6;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.2px;
 }
 
 /* Название предмета */
 .lesson-subject {
     font-weight: 600;
-    font-size: 14px;
+    font-size: 12.5px;
     color: #0f172a;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-/* Учитель и кабинет */
+/* Учитель и кабинет в одну строку */
 .lesson-details {
     display: flex;
-    gap: 6px;
-    font-size: 12px;
+    gap: 4px;
+    font-size: 10px;
     flex-wrap: wrap;
+    align-items: center;
 }
 .lesson-teacher {
     background: #dbeafe;
-    padding: 2px 8px;
-    border-radius: 8px;
-    color: #1e40af;
+    padding: 1px 6px;
+    border-radius: 6px;
+    color: #1e3a8a;
     font-weight: 500;
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .lesson-room {
-    background: #bfdbfe;
-    padding: 2px 8px;
-    border-radius: 8px;
-    color: #1e40af;
+    background: #e0f2fe;
+    padding: 1px 6px;
+    border-radius: 6px;
+    color: #0369a1;
+    font-weight: 500;
+    white-space: nowrap;
 }
-.lesson-room::before { content: "📍 "; }
+.lesson-room::before { content: "🚪 "; font-size: 9px; }
 
 /* Пустой урок */
 .lesson-empty { 
-    background: #fafafa; 
-        color: #64748b; 
+    background: #f5f7fa; 
+    color: #6b7280; 
     font-style: italic; 
     text-align: center; 
+    border-left-color: #cbd5e1;
+    justify-content: center;
+}
+.lesson-empty .lesson-subject {
+    font-size: 11px;
+    color: #94a3b8;
+    margin-bottom: 0;
 }
 
 /* Загрузка */
@@ -139,16 +156,16 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #64748b;
+    color: #5f6c80;
+    font-size: 14px;
 }
 .spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid var(--border-light);
-    border-top-color: var(--accent);
+    width: 32px;
+    height: 32px;
+    border: 2.5px solid #e6edf5;
+    border-top-color: #2563eb;
     border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin-bottom: 16px;
+    animation: spin 0.7s linear infinite;
+    margin-bottom: 12px;
 }
-
 @keyframes spin { to { transform: rotate(360deg); } }
