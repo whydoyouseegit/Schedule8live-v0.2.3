@@ -169,6 +169,8 @@
     `;
     debugMenu.innerHTML = `
         <strong>DEBUG MENU by oops</strong>
+        <label>Файл Excel: <input type="text" id="debugFile" value="test.xlsx" style="width:100%"></label>
+        <button id="debugLoad">Загрузить Excel</button>
         <button id="debugSheet1">1 смена</button>
         <button id="debugSheet2">2 смена</button>
         <button id="debugReset">Авто</button>
@@ -205,5 +207,6 @@
     dashBtn.textContent = 'Открыть Dashboard';
     dashBtn.onclick = () => window.open('/dashboard.html', '_blank');
     debugMenu.appendChild(dashBtn);
+
 
 })();
