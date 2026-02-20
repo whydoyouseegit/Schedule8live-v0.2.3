@@ -169,7 +169,7 @@
     `;
     debugMenu.innerHTML = `
         <strong>DEBUG MENU by oops</strong>
-        <label>Файл Excel: <input type="text" id="debugFile" value="test.xlsx" style="width:100%"></label>
+        <label>Файл Excel: <input type="text" id="debugFile" value="LOCAL DEBUG ONLY" style="width:100%"></label>
         <button id="debugLoad">Загрузить Excel</button>
         <button id="debugSheet1">1 смена</button>
         <button id="debugSheet2">2 смена</button>
@@ -210,3 +210,4 @@
 
 
 })();
+
