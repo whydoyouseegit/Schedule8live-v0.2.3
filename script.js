@@ -22,24 +22,30 @@
     updateTime();
 
     // --- Основная загрузка ---
-    async function loadSchedule(fileName = EXCEL_FILE){
+    async function loadSchedule() {
         const container = document.getElementById('content');
-        container.innerHTML = `<div class="loading-state">
-            <div class="spinner"></div>
-            <p>Загрузка расписания...</p>
-        </div>`;
 
-        try{
-            const response = await fetch(fileName);
-            if(!response.ok) throw new Error(`Файл ${fileName} не найден`);
+        container.innerHTML = `
+            <div class="loading-state">
+                <div class="spinner"></div>
+                <p>Загрузка расписания...</p>
+            </div>
+        `;
+
+        try {
+            const response = await fetch('/api/schedule');
+            if (!response.ok) throw new Error('Расписание не найдено');
+
             const data = await response.arrayBuffer();
-            workbookCache = XLSX.read(data,{type:'array'});
+            workbookCache = XLSX.read(data, { type: 'array' });
             startAutoSwitch();
-        }catch(error){
-            container.innerHTML = `<div class="loading-state">
-                <p style="color: #ef4444;">❌ ${error.message}</p>
-                <p style="font-size: 14px; color: #64748b;">Поместите файл ${fileName} в папку с проектом</p>
-            </div>`;
+
+        } catch (error) {
+            container.innerHTML = `
+                <div class="loading-state">
+                    <p style="color:red;">${error.message}</p>
+                </div>
+            `;
         }
     }
 
@@ -196,5 +202,10 @@
         forcedSheet=null;
         startAutoSwitch();
     });
+
+    const dashBtn = document.createElement('button');
+    dashBtn.textContent = 'Открыть Dashboard';
+    dashBtn.onclick = () => window.open('/dashboard.html', '_blank');
+    debugMenu.appendChild(dashBtn);
 
 })();
