@@ -132,7 +132,7 @@ body {
     font-weight: 500;
     white-space: nowrap;
 }
-.lesson-room::before { content: "🚪 "; font-size: 9px; }
+.lesson-room::before { content: "Каб. "; font-size: 9px; }
 
 /* Пустой урок */
 .lesson-empty { 
@@ -168,4 +168,5 @@ body {
     animation: spin 0.7s linear infinite;
     margin-bottom: 12px;
 }
+
 @keyframes spin { to { transform: rotate(360deg); } }
