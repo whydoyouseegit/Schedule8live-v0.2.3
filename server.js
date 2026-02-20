@@ -5,7 +5,7 @@ import fs from 'fs';
 import path from 'path';
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -57,4 +57,5 @@ app.get('/api/schedule', (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Server started on http://localhost:${PORT}`);
+
 });
