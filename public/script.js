@@ -85,7 +85,7 @@
         let headerRow=-1;
         for(let i=0;i<rows.length;i++){
             const row = rows[i]||[];
-            if(String(row[0]||'').includes('СРЕДА') && String(row[1]||'')==='Урок'){
+            if(String(row[0]||'').includes('') && String(row[1]||'')==='Урок'){
                 headerRow=i;
                 break;
             }
@@ -168,9 +168,7 @@
         display: none; flex-direction: column; gap: 6px;
     `;
     debugMenu.innerHTML = `
-        <strong>DEBUG MENU</strong>
-        <label>Файл Excel: <input type="text" id="debugFile" value="test.xlsx" style="width:100%"></label>
-        <button id="debugLoad">Загрузить Excel</button>
+        <strong>DEBUG MENU by oops</strong>
         <button id="debugSheet1">1 смена</button>
         <button id="debugSheet2">2 смена</button>
         <button id="debugReset">Авто</button>
