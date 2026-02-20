@@ -1,6 +1,6 @@
 (function() {
     const EXCEL_FILE = 'test.xlsx';
-    const CLASSES = ['5а','5б','5в','9а','9б','9в','10а','10б','10в','11а','11б', '6а', '6б' , '7а', '7в' , '8а', '8б' , '8в', 'Иностранный язык' , 'Физическая культура', 'Музыка'];
+    const CLASSES = ['5а','5б','5в','9а','9б','9в','10а','10б','10в','11а','11б', '6а', '6б' , '7а', '7в' , '8а', '8б' , '8в', 'Иностранный язык' , 'Физическая культура', 'Музыка', 'Мероприятия'];
     let slideInterval = null;
     let currentSlide = 0;
     let workbookCache = null;
@@ -57,7 +57,7 @@
         const minute = now.getMinutes();
 
         if(hour < 13) return ['1 смена'];
-        if(hour === 13 && minute < 50) return ['1 смена','2 смена'];
+        if(hour === 14 && minute < 10) return ['1 смена','2 смена'];
         return ['2 смена'];
     }
 
@@ -135,7 +135,7 @@
             const lessons=schedule[pos.name]||[];
             return `
                 <div class="schedule-card">
-                    <div class="card-header">${pos.name} <span class="class-badge">класс</span></div>
+                    <div class="card-header">${pos.name} <span class="class-badge"></span></div>
                     <div class="lessons-list">
                         ${lessons.map(lesson=>`
                             <div class="lesson-item ${!lesson.teacher&&!lesson.room&&lesson.subject==='окно'?'lesson-empty':''}">
