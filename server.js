@@ -6,6 +6,9 @@ import path from 'path';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("Server running on port", PORT);
+});
 
 app.use(cors());
 app.use(express.json());
@@ -59,3 +62,4 @@ app.listen(PORT, () => {
     console.log(`Server started on http://localhost:${PORT}`);
 
 });
+
