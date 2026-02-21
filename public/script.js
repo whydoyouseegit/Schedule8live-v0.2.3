@@ -1,6 +1,6 @@
 (function() {
     const EXCEL_FILE = 'test.xlsx';
-    const CLASSES = ['5а','5б','5в','9а','9б','9в','10а','10б','10в','11а','11б', '6а', '6б' , '7а', '7в' , '8а', '8б' , '8в', 'Иностранный язык' , 'Физическая культура', 'Музыка', 'Мероприятия', 'Ин. яз./ Физ-ра/Музыка'];
+    const CLASSES = ['5а','5б','5в','9а','9б','9в','10а','10б','10в','11а','11б', '6а', '6б' , '7а', '7в' , '8а', '8б' , '8в', 'Иностранный язык' , 'Физическая культура', 'Музыка', 'Мероприятия'];
     let slideInterval = null;
     let currentSlide = 0;
     let workbookCache = null;
@@ -169,8 +169,6 @@
     `;
     debugMenu.innerHTML = `
         <strong>DEBUG MENU by oops</strong>
-        <label>Файл Excel: <input type="text" id="debugFile" value="LOCAL DEBUG ONLY" style="width:100%"></label>
-        <button id="debugLoad">Загрузить Excel</button>
         <button id="debugSheet1">1 смена</button>
         <button id="debugSheet2">2 смена</button>
         <button id="debugReset">Авто</button>
@@ -208,9 +206,6 @@
     dashBtn.onclick = () => window.open('/dashboard.html', '_blank');
     debugMenu.appendChild(dashBtn);
 
-
 })();
 
-
-})();
 
