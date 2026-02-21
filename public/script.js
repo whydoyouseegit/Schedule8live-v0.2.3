@@ -7,7 +7,7 @@
         '9а','9б','9в',
         '10а','10б','10в',
         '11а','11б',
-        'Иностранный язык','Физическая культура','Музыка','Мероприятия', 'Ин. яз./ Физ-ра/Музыка'
+        'Иностранный язык','Физическая культура','Музыка','Мероприятия'
     ];
 
     let slideInterval = null;
@@ -132,8 +132,9 @@
 
         positions.sort((a, b) => a.col - b.col);
 
-        const schedule = {};
         const dataStart = headerRow + 2;
+
+        const schedule = {};
 
         positions.forEach(pos => {
 
@@ -148,62 +149,34 @@
 
                 const currentRow = rows[row] || [];
 
-                const rawTime = String(currentRow[timeCol] || '').trim();
-                const rawSubject = String(currentRow[subjCol] || '').trim();
-                const rawTeacher = String(currentRow[teachCol] || '').trim();
-                const rawCabinet = String(currentRow[cabCol] || '').trim();
+                const rawTime = String(currentRow[timeCol] || '');
+                const rawSubject = String(currentRow[subjCol] || '');
+                const rawTeacher = String(currentRow[teachCol] || '');
+                const rawCabinet = String(currentRow[cabCol] || '');
 
-                if (!rawTime && !rawSubject && !rawTeacher && !rawCabinet) {
-                    continue;
-                }
-
+                // РЕНДЕРИМ ВСЁ
                 let lessonNumber = 0;
-                let timeText = rawTime;
+                let timeText = rawTime.trim();
 
-                const numberMatch = rawTime.match(/^(\d+)\s*\n?/);
+                const numberMatch = timeText.match(/^(\d+)\s*\n?/);
 
                 if (numberMatch) {
                     lessonNumber = parseInt(numberMatch[1]);
-                    timeText = rawTime.replace(numberMatch[0], '').trim();
-                }
-
-                let subject = rawSubject;
-
-                if (subject.includes('/')) {
-                    subject = subject
-                        .split('/')
-                        .map(s => s.trim())
-                        .join(' / ');
-                }
-
-                let teacher = rawTeacher
-                    .replace(/[^\w\s\.,\-А-Яа-я]/g, '')
-                    .trim();
-
-                let cabinet = rawCabinet
-                    .replace(/[^\w\d\s\-]/g, '')
-                    .trim();
-
-                if (!subject || subject === '-' || subject === '—') {
-                    subject = 'окно';
-                    teacher = '';
-                    cabinet = '';
+                    timeText = timeText.replace(numberMatch[0], '').trim();
                 }
 
                 lessons.push({
                     number: lessonNumber,
                     time: timeText.replace(/\n/g, ' ').trim(),
-                    subject,
-                    teacher,
-                    room: cabinet
+                    subject: rawSubject.trim(),
+                    teacher: rawTeacher.trim(),
+                    room: rawCabinet.trim()
                 });
 
-                if (lessons.length >= 15) break;
+                if (lessons.length >= 20) break;
             }
 
-            if (lessons.length > 0) {
-                schedule[pos.name] = lessons;
-            }
+            schedule[pos.name] = lessons;
         });
 
         const html = positions.map(pos => {
@@ -215,18 +188,16 @@
                     <div class="card-header">${pos.name}</div>
                     <div class="lessons-list">
                         ${lessons.map(lesson => `
-                            <div class="lesson-item ${lesson.subject === 'окно' ? 'lesson-empty' : ''}">
+                            <div class="lesson-item">
                                 <div class="lesson-time">
                                     ${lesson.number > 0 ? `<span class="lesson-number">${lesson.number}</span>` : ''}
-                                    ${lesson.time}
+                                    ${lesson.time || ''}
                                 </div>
-                                <div class="lesson-subject">${lesson.subject}</div>
-                                ${(lesson.teacher || lesson.room) ? `
-                                    <div class="lesson-details">
-                                        ${lesson.teacher ? `<span class="lesson-teacher">${lesson.teacher}</span>` : ''}
-                                        ${lesson.room ? `<span class="lesson-room">${lesson.room}</span>` : ''}
-                                    </div>
-                                ` : ''}
+                                <div class="lesson-subject">${lesson.subject || ''}</div>
+                                <div class="lesson-details">
+                                    ${lesson.teacher ? `<span class="lesson-teacher">${lesson.teacher}</span>` : ''}
+                                    ${lesson.room ? `<span class="lesson-room">${lesson.room}</span>` : ''}
+                                </div>
                             </div>
                         `).join('')}
                     </div>
@@ -238,5 +209,63 @@
     }
 
     loadSchedule();
+
+    // ===================
+    // DEBUG MENU
+    // ===================
+
+    const debugMenu = document.createElement('div');
+    debugMenu.style.cssText = `
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        width: 280px;
+        background: rgba(0,0,0,0.9);
+        color: #fff;
+        font-size: 14px;
+        padding: 10px;
+        border-radius: 10px;
+        z-index: 9999;
+        display: none;
+        flex-direction: column;
+        gap: 6px;
+    `;
+
+    debugMenu.innerHTML = `
+        <strong>DEBUG MENU by oops</strong>
+        <button id="debugSheet1">1 смена</button>
+        <button id="debugSheet2">2 смена</button>
+        <button id="debugReset">Авто</button>
+        <button id="debugReload">Перезагрузить</button>
+    `;
+
+    document.body.appendChild(debugMenu);
+
+    document.addEventListener('keydown', e => {
+        if (e.key.toLowerCase() === 'm') {
+            debugMenu.style.display =
+                debugMenu.style.display === 'flex' ? 'none' : 'flex';
+        }
+    });
+
+    document.getElementById('debugSheet1').onclick = () => {
+        forcedSheet = '1 смена';
+        startAutoSwitch();
+    };
+
+    document.getElementById('debugSheet2').onclick = () => {
+        forcedSheet = '2 смена';
+        startAutoSwitch();
+    };
+
+    document.getElementById('debugReset').onclick = () => {
+        forcedSheet = null;
+        startAutoSwitch();
+    };
+
+    document.getElementById('debugReload').onclick = () => {
+        forcedSheet = null;
+        loadSchedule();
+    };
 
 })();
